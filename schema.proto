@@ -1,0 +1,12 @@
+message Node {
+  required uint64 index = 1;
+  required bytes hash = 2;
+  required uint64 size = 3;
+}
+
+message Message {
+  repeated Node nodes = 1;
+  optional bytes signature = 2;
+  required uint64 seq = 3;
+  optional bytes data = 4;
+}

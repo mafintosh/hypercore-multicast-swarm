@@ -1,0 +1,28 @@
+{
+  "name": "hypercore-multicast-swarm",
+  "version": "0.0.0",
+  "description": "Multicast hypercore data over a multicast UDP socket",
+  "main": "index.js",
+  "dependencies": {
+    "cyclist": "^1.0.1",
+    "protocol-buffers-encodings": "^1.1.0"
+  },
+  "devDependencies": {
+    "protocol-buffers": "^4.0.4",
+    "standard": "^11.0.1"
+  },
+  "scripts": {
+    "test": "standard",
+    "protobuf": "protocol-buffers schema.proto -o messages.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mafintosh/hypercore-multicast-swarm.git"
+  },
+  "author": "Mathias Buus (@mafintosh)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mafintosh/hypercore-multicast-swarm/issues"
+  },
+  "homepage": "https://github.com/mafintosh/hypercore-multicast-swarm"
+}
