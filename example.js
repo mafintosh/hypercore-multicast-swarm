@@ -9,6 +9,7 @@ feed.append(Buffer.alloc(99999))
 feed.append('hello world', function () {
   createSwarm(feed.key).on('bind', function () {
     sw.multicast(0)
+    sw.multicast(1)
   })
 })
 

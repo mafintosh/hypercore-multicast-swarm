@@ -9,17 +9,28 @@ function Swarm (feed, opts) {
   if (!(this instanceof Swarm)) return new Swarm(feed, opts)
   events.EventEmitter.call(this)
 
-  this.cast = cast(opts)
-  this.cast.on('message', this._onmessage.bind(this))
-  this.cast.on('bind', this.emit.bind(this, 'bind'))
-  this.cast.on('close', this.emit.bind(this, 'close'))
+  const self = this
+
   this.feed = feed
+  this.cast = null
+
+  feed.ready(function (err) {
+    if (err) return self.emit('error', err)
+
+    self.cast = cast(feed.key, opts)
+    self.cast.on('message', self._onmessage.bind(self))
+    self.cast.on('bind', self.emit.bind(self, 'bind'))
+    self.cast.on('close', self.emit.bind(self, 'close'))
+
+    self.emit('ready')
+  })
 }
 
 util.inherits(Swarm, events.EventEmitter)
 
 Swarm.prototype.close = function () {
-  this.cast.close()
+  if (!this.cast) this.once('ready', this.close)
+  else this.cast.close()
 }
 
 Swarm.prototype._onmessage = function (buf) {
@@ -50,6 +61,7 @@ Swarm.prototype.multicast = function (seq, cb) {
         data
       })
 
+      // always set here, as .get runs after feed.ready
       self.cast.multicast(buf, cb)
     })
   })
